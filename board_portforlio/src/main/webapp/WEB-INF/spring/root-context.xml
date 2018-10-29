@@ -28,8 +28,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<mybatis-spring:scan
-		base-package="org.atomsk.mapper" />
+	<mybatis-spring:scan base-package="org.atomsk.mapper"/>
 		
 	<context:component-scan base-package="org.atomsk.service"></context:component-scan>	
 			

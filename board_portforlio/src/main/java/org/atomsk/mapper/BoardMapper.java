@@ -10,7 +10,7 @@ public interface BoardMapper {
 	
 	public int register(BoardVO boardVO);
 	
-	public BoardVO read(BoardVO boardVO);
+	public BoardVO read(Long bno);
 	
 	public int delete(BoardVO boardVO);
 	

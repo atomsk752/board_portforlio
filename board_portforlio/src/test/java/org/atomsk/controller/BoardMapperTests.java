@@ -23,9 +23,9 @@ public class BoardMapperTests {
 	public void testRegister() {
 		
 		BoardVO boardVO = new BoardVO();
-		boardVO.setTitle("02테스트title");
-		boardVO.setContent("02테스트Content");
-		boardVO.setWriter("02테스트writer");
+		boardVO.setTitle("03테스트title");
+		boardVO.setContent("03테스트Content");
+		boardVO.setWriter("03테스트writer");
 		log.info(mapper.register(boardVO));
 	}
 	
@@ -36,9 +36,8 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testRead() {
-		BoardVO boardVO = new BoardVO();
-		boardVO.setBno(3);
-		log.info(mapper.read(boardVO));
+		BoardVO boardVO = mapper.read(10L);
+		log.info(boardVO);
 	}
 	
 	@Test
