@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.atomsk.mapper.BoardMapper">
+	<insert id="register" parameterType="org.atomsk.domain.BoardVO">
+	insert into tbl_sampleboard (title, content, writer) values(#{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="getList" resultType="org.atomsk.domain.BoardVO">
+	<![CDATA[
+	select * from tbl_sampleboard where bno > 0
+	]]>
+	</select>
+	
+	<select id="read" resultType="org.atomsk.domain.BoardVO">
+	select * from tbl_sampleboard where bno = #{bno}
+	</select>
+	
+<!--	<delete id="delete" parameterType="org.atomsk.domain.BoardVO">
+	delete tbl_sampleboard where bno = #{bno}
+	</delete> 
+-->
+
+	<update id="delete" parameterType="org.atomsk.domain.BoardVO">
+  	update tbl_sampleboard set del = 1 where bno= #{bno}
+	</update>
+	
+	<update id="update" parameterType="org.atomsk.domain.BoardVO">
+	update tbl_sampleboard set title = #{title}, 
+	content = #{content}, 
+	writer = #{writer}, 
+	updatedate = now() 
+	where bno = #{bno}
+	</update>
+	
+</mapper>
