@@ -34,12 +34,12 @@
 					</div>
 
 					<form role="form" action="modify" method="get">
-						<input type='hidden' name='page' value="">
+						<input type='hidden' name='page' value="${pageObj.page}">
 						<input type='hidden' name='bno' value="${board.bno}">
 						<button type="submit" class="btn btn-default">수정</button>
 					</form>
 					<form role="form" action="list" method="get">
-						<input type='hidden' name='page' value="">
+					<input type="hidden" name="page" value="${pageObj.page}">
 						<button type="submit" class="btn btn-default">목록으로</button>
 					</form>
 				

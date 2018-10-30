@@ -44,19 +44,22 @@ public class BoardController {
 	}
 	
 	@GetMapping({"/get","/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model) {
+	public void get(@RequestParam("bno") Long bno, @ModelAttribute("pageObj") PageParam pageParam, Model model) {
 		log.info("/get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO boardVO, RedirectAttributes rttr) {
+	public String modify(BoardVO boardVO, @ModelAttribute("pageObj") PageParam pageParam, RedirectAttributes rttr) {
 		log.info("modify: "+ boardVO);
 		
 		if (service.modify(boardVO)) {
 			rttr.addFlashAttribute("result", "SUCCESS");
 		}
-		return "redirect:/board/list";
+		rttr.addAttribute("page",pageParam.getPage());
+		rttr.addAttribute("bno",boardVO.getBno());
+
+		return "redirect:/board/get";
 	}
 	
 	@PostMapping("/remove")

@@ -39,7 +39,7 @@
                                     <c:forEach items="${list}" var ="board">
                                         <tr>
                                             <td><c:out value="${board.bno}"></c:out></td>
-                                            <td><a href='/board/get?bno=${board.bno}'>
+                                            <td><a href="${board.bno}" class="board">
                                             <c:out value="${board.title}"/></a></td>
                                             <td><c:out value="${board.writer}"></c:out></td>
                                             <td><fmt:formatDate value="${board.regdate}"
@@ -111,7 +111,6 @@ $(document).ready(function(){
 	history.replaceState({},null,null)
 	
 	function checkModal(result){
-		
 		if(result === '' || history.state){
 			return;
 		}
@@ -119,11 +118,22 @@ $(document).ready(function(){
 			$(".modal-body").html("작업 성공");
 			msg.modal("show");
 		}
-
 	}
+	
+	
 	var actionForm = $("#actionForm");
 	var pagination = $(".pagination li a");
 	var pageNum = ${pageObj.page};
+	
+	
+	$(".board").on("click", function(e){
+		e.preventDefault();
+		var bno = $(this).attr("href");
+		actionForm.append("<input type='hidden' name='bno' value='"+bno+"'>");			
+		actionForm.attr("action","/board/get").attr("method", "get").submit();
+	});
+	
+	
 	pagination.on("click", function(e){
 		e.preventDefault();
 		var target = $(this).attr("href");

@@ -19,6 +19,7 @@
 			<div class="panel-body">
 
 				<form role="form" action="/board/modify" method="post">
+				<input type='hidden' name='page' value="${pageObj.page}">
 				<input type='hidden' name='bno' value="${board.bno}">
 			<div class="form-group">
 						<label>Title</label> <input class="form-control" name='title' value='<c:out value="${board.title}"/>'>
@@ -47,11 +48,12 @@
 					<button type="submit" data-oper='modify' class="btn btn-default">수정</button>
 					</form>
 					<form role="form" action="remove" method="post">
-						<input type='hidden' name='page' value="">
+						<input type='hidden' name='page' value="${pageObj.page}">
 						<input type='hidden' name='bno' value="${board.bno}">
 						<button type="submit" class="btn btn-default">삭제</button>
 					</form>
 					<form action="/board/list" method="get">
+						<input type='hidden' name='page' value="${pageObj.page}">
 					<button type="submit" class="btn btn-default">취소</button>
 					</form>
 				
