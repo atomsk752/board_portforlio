@@ -31,16 +31,22 @@
                                             <th>제목</th>
                                             <th>글쓴이</th>
                                             <th>작성시간</th>
+                                            <th>수정일</th>
+                                            <th>삭제여부</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <c:forEach items="${list}" var ="board">
                                         <tr>
                                             <td><c:out value="${board.bno}"></c:out></td>
-                                            <td><c:out value="${board.title}"></c:out></td>
+                                            <td><a href='/board/get?bno=${board.bno}'>
+                                            <c:out value="${board.title}"/></a></td>
                                             <td><c:out value="${board.writer}"></c:out></td>
                                             <td><fmt:formatDate value="${board.regdate}"
 											pattern="MM-dd / HH:mm"></fmt:formatDate></td>
+                                            <td><fmt:formatDate value="${board.updatedate}"
+											pattern="MM-dd / HH:mm"></fmt:formatDate></td>
+											<td><c:out value="${board.del}"></c:out></td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
