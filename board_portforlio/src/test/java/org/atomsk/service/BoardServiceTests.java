@@ -3,6 +3,7 @@ package org.atomsk.service;
 import static org.junit.Assert.assertNotNull;
 
 import org.atomsk.domain.BoardVO;
+import org.atomsk.domain.PageParam;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class BoardServiceTests {
 	}
 	
 	@Test
-	public void testGetList() {
-		service.getList().forEach(board -> log.info(board));
+	public void testGetList(PageParam pageParam ) {
+		service.getList(pageParam).forEach(board -> log.info(board));
 	}
 	
 	@Test

@@ -9,7 +9,11 @@
 	
 	<select id="getList" resultType="org.atomsk.domain.BoardVO">
 	<![CDATA[
-	select * from tbl_sampleboard where bno > 0
+	select * from tbl_sampleboard
+	where 1=1 
+	and bno > (select max(bno) - 100000 from tbl_sampleboard) 
+	and del = 0
+	order by bno desc limit #{skip},10
 	]]>
 	</select>
 	
@@ -33,5 +37,9 @@
 	updatedate = now() 
 	where bno = #{bno}
 	</update>
+	
+	<select id="count" resultType="int">
+  	select count(*) from tbl_board
+  	</select>
 	
 </mapper>

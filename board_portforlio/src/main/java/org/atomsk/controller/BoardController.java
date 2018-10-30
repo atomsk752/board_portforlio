@@ -1,10 +1,12 @@
 package org.atomsk.controller;
 
 import org.atomsk.domain.BoardVO;
+import org.atomsk.domain.PageParam;
 import org.atomsk.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,10 +24,10 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Model model, @ModelAttribute("pageObj") PageParam pageParam) {
 		log.info("list");
-		
-		model.addAttribute("list",service.getList());
+		pageParam.setTotal(service.count());
+		model.addAttribute("list",service.getList(pageParam));
 	}
 	
 	@PostMapping("/register")

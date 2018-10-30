@@ -54,6 +54,25 @@
                             </div>
                             <!-- /.table-responsive -->
                         </div>
+                    <form id="actionForm">
+						<input type='hidden' name='page' id='page' value='${pageObj.page}'>
+					</form>
+							<div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
+								<ul class="pagination">
+								<c:if test="${pageObj.prev}">
+									<li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+									<a href="${pageObj.start-1}">Previous</a></li>
+								</c:if>
+								<c:forEach begin="${pageObj.start}" end="${pageObj.end}" var="page">
+									<li class="paginate_button" data-page="${page}"  aria-controls="dataTables-example" tabindex="0">
+									<a href="${page}"><c:out value="${page}"></c:out></a></li>
+								</c:forEach>
+								<c:if test="${pageObj.next}">
+									<li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+									<a href="${pageObj.end+1}">Next</a></li>
+								</c:if>
+								</ul>
+							</div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -102,6 +121,16 @@ $(document).ready(function(){
 		}
 
 	}
+	var actionForm = $("#actionForm");
+	var pagination = $(".pagination li a");
+	var pageNum = ${pageObj.page};
+	pagination.on("click", function(e){
+		e.preventDefault();
+		var target = $(this).attr("href");
+		actionForm.find("input[name='page']").val(target);
+		actionForm.attr("action", "/board/list").attr("method","get").submit();
+	});
+	$('.pagination li[data-page='+pageNum+']').addClass("active");
 	
 });
 
