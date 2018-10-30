@@ -7,21 +7,27 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tables</h1>
+                    <h1 class="page-header">게씨파안</h1>
                     		<h2>
 			<a href="/board/register">Register</a>
 		</h2>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             	게시판
+                        <select id="size">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    	</select>
                         </div>
                         <!-- /.panel-heading -->
+
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">

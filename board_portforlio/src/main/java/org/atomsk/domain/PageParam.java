@@ -10,6 +10,7 @@ public class PageParam {
 	private String[] types;
 	private String keyword, type;
 	
+	
 	public PageParam() {
 		
 		this.page = 1;
