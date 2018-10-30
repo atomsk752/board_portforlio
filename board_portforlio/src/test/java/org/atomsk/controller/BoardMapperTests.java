@@ -40,12 +40,7 @@ public class BoardMapperTests {
 		log.info(boardVO);
 	}
 	
-	@Test
-	public void testDelete() {
-		BoardVO boardVO = new BoardVO();
-		boardVO.setBno(8);
-		log.info(mapper.delete(boardVO));
-	}
+
 	@Test
 	public void testUpdate() {
 		BoardVO boardVO = new BoardVO();

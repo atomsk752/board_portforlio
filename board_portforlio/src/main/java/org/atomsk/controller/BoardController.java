@@ -31,9 +31,14 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(BoardVO boardVO, RedirectAttributes rttr) {
 		log.info("register:..."+ boardVO);
-		service.register(boardVO);
-		rttr.addFlashAttribute("result", boardVO.getBno());
+		
+		int result = service.register(boardVO);
+		
+		rttr.addFlashAttribute("result", result==1?"SUCCESS":"FAIL");
 		return "redirect:/board/list";
+	}
+	@GetMapping("/register")
+	public void register() {
 	}
 	
 	@GetMapping("/get")
