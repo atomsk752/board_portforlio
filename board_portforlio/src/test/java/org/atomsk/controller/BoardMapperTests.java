@@ -44,7 +44,7 @@ public class BoardMapperTests {
 	@Test
 	public void testUpdate() {
 		BoardVO boardVO = new BoardVO();
-		boardVO.setBno(8);
+		boardVO.setBno(8L);
 		boardVO.setTitle("01죄송");
 		boardVO.setContent("01asd");
 		boardVO.setWriter("01asda");

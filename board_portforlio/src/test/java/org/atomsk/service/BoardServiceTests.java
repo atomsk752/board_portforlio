@@ -37,7 +37,7 @@ public class BoardServiceTests {
 	public void testUpdate() {
 		
 		BoardVO boardVO = new BoardVO();
-		boardVO.setBno(8);
+		boardVO.setBno(8L);
 
 		if (boardVO == null) {
 			return;

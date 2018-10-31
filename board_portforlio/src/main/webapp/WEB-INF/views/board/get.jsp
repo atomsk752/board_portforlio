@@ -60,7 +60,45 @@
 
 </div>
 <!-- /.row -->
+<script type="text/javascript" src="/resources/js/reply.js"></script>
 
+<script type="text/javascript">
+
+console.log("=========");
+console.log("JS TEST");
+
+var bnoValue = '<c:out value="${board.bno}"/>';
+
+//add test
+/* replyService.add(
+		{reply:"JS Test", replyer:"tester", bno:bnoValue},
+		function(result){
+			alert("RESULT: " + result);
+		}
+); */
+//list test
+/* replyService.getList({bno:bnoValue, page:1}, function(list){
+	
+	for (var i = 0, len = list.length||0; i<len; i++) {
+		console.log(list[i]);
+	}
+}); */
+/* replyService.remove(23, fuction(count){
+	console.log(count);
+	if(count==="success"){
+		alert("REMOVED");
+		}
+	},function(err){
+		alert('ERROR...');
+	}); */ //코드가 이상함 확인점
+	
+	
+
+
+
+
+
+</script>
 
 <%@include file="../includes/footer.jsp"%>
 </body>
