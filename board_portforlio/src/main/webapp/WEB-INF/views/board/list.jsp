@@ -89,8 +89,6 @@
                             <!-- /.table-responsive -->
                         </div>
 
-
-
 							<div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
 								<ul class="pagination">
 								<c:if test="${pageObj.prev}">
@@ -187,7 +185,7 @@ $(document).ready(function(){
 		actionForm.attr("action","/board/list");
 		actionForm.find("input[name='type']").val(typeValue);
 		actionForm.find("input[name='keyword']").val(keyWord);
-		$(".page").val(1);
+		$("#page").val(1);
 		actionForm.submit();
 		
 	});

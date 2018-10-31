@@ -58,10 +58,11 @@ public class PageParam {
 		return UriComponentsBuilder.fromPath(path)
 		.queryParam("bno", this.bno)
 		.queryParam("page", this.page)
+		.queryParam("display", this.display)
 		.queryParam("type", this.type)
 		.queryParam("keyword", this.keyword)
 		.toUriString();
 		
-	}//end link
+	}//end link (unused)
 	
 }

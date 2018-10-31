@@ -22,6 +22,8 @@
 				<input type='hidden' name='page' value="${pageObj.page}">
 				<input type='hidden' name='bno' value="${board.bno}">
 				<input type="hidden" name="display" value="${pageObj.display}">
+				<input type='hidden' name='type' value='${pageObj.type}'>	
+				<input type='hidden' name='keyword' value='${pageObj.keyword}'>	
 			<div class="form-group">
 						<label>Title</label> <input class="form-control" name='title' value='<c:out value="${board.title}"/>'>
 						<p class="help-block"></p>
@@ -52,11 +54,15 @@
 						<input type='hidden' name='page' value="${pageObj.page}">
 						<input type='hidden' name='bno' value="${board.bno}">
 						<input type="hidden" name="display" value="${pageObj.display}">
+						<input type='hidden' name='type' value='${pageObj.type}'>	
+						<input type='hidden' name='keyword' value='${pageObj.keyword}'>	
 						<button type="submit" class="btn btn-default">삭제</button>
 					</form>
 					<form action="/board/list" method="get">
 						<input type='hidden' name='page' value="${pageObj.page}">
 						<input type="hidden" name="display" value="${pageObj.display}">
+						<input type='hidden' name='type' value='${pageObj.type}'>	
+						<input type='hidden' name='keyword' value='${pageObj.keyword}'>	
 					<button type="submit" class="btn btn-default">취소</button>
 					</form>
 				

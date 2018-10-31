@@ -59,6 +59,8 @@ public class BoardController {
 		rttr.addAttribute("page",pageParam.getPage());
 		rttr.addAttribute("bno",boardVO.getBno());
 		rttr.addAttribute("display",pageParam.getDisplay());
+		rttr.addAttribute("type",pageParam.getType());
+		rttr.addAttribute("keyword",pageParam.getKeyword());
 		return "redirect:/board/get";
 	}
 	
@@ -72,6 +74,8 @@ public class BoardController {
 		rttr.addAttribute("page",pageParam.getPage());
 		rttr.addAttribute("bno",boardVO.getBno());
 		rttr.addAttribute("display",pageParam.getDisplay());
+		rttr.addAttribute("type",pageParam.getType());
+		rttr.addAttribute("keyword",pageParam.getKeyword());
 		return "redirect:/board/list";
 	}
 	

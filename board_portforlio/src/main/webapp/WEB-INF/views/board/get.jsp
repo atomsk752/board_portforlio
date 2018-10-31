@@ -37,12 +37,16 @@
 						<input type='hidden' name='page' value="${pageObj.page}">
 						<input type='hidden' name='bno' value="${board.bno}">
 						<input type="hidden" name="display" value="${pageObj.display}">
+						<input type='hidden' name='type' value='${pageObj.type}'>	
+						<input type='hidden' name='keyword' value='${pageObj.keyword}'>			
 						<button type="submit" class="btn btn-default">수정</button>
 					</form>
 					<form role="form" action="list" method="get">
 					<input type="hidden" name="page" value="${pageObj.page}">
 					<input type="hidden" name="display" value="${pageObj.display}">
-						<button type="submit" class="btn btn-default">목록으로</button>
+					<input type='hidden' name='type' value='${pageObj.type}'>	
+					<input type='hidden' name='keyword' value='${pageObj.keyword}'>			
+					<button type="submit" class="btn btn-default">목록으로</button>
 					</form>
 				
 			</div>
