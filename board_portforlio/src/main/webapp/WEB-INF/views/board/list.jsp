@@ -26,12 +26,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                        <select onchange="change(this)">
-                        <option value="10"${pageObj.display==10?"selected":""}"><c:out value="${pageObj.display}"></c:out></option>          
-                        <option value="10"${pageObj.display==10?"selected":""}">10</option>
-                        <option value="20"${pageObj.display==10?"selected":""}">20</option>
-                        <option value="50"${pageObj.display==10?"selected":""}">50</option>
-                        <option value="100"${pageObj.display==10?"selected":""}">100</option>
+                        <select onchange="change(this)">       
+                        <option value="10"${pageObj.display==10?"selected":""}>10</option>
+                        <option value="20"${pageObj.display==20?"selected":""}>20</option>
+                        <option value="50"${pageObj.display==50?"selected":""}>50</option>
+                        <option value="100"${pageObj.display==100?"selected":""}>100</option>
                     	</select>
                     	개 씩 모아보기
                         </div>
@@ -66,13 +65,32 @@
                                     </c:forEach>
                                     </tbody>
                                 </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
                     <form id="actionForm">
 						<input type='hidden' name='page' id='page' value='${pageObj.page}'>
-						<input type='hidden' name='display' id='display' value='${pageObj.display}'>						
+						<input type='hidden' name='display' id='display' value='${pageObj.display}'>
+						<input type='hidden' name='type' value='${pageObj.type}'>	
+						<input type='hidden' name='keyword' value='${pageObj.keyword}'>						
 					</form>
+                            </div>
+            <div class="row">
+            <div class="col-lg-12">
+            <select id="search" name="type">
+			<option <c:out value="${pageObj.type== null?'selected':'' }"/>>검색</option>
+			<option value="t" <c:out value="${pageObj.type== 't'?'selected':'' }"/>>제목</option>
+			<option value="c" <c:out value="${pageObj.type== 'c'?'selected':'' }"/>>내용</option>
+			<option value="w" <c:out value="${pageObj.type== 'w'?'selected':'' }"/>>글쓴이</option>
+			<option value="tc" <c:out value="${pageObj.type== 'tc'?'selected':'' }"/>>제목+내용</option>
+			<option value="tcw" <c:out value="${pageObj.type== 'tcw'?'selected':'' }"/>>전체</option>
+			</select>
+			<input type='text' id='keyword' value="${pageObj.keyword}">
+			<button id="searchBtn">검색 ㄱㄱ</button>
+			</div>
+			</div>
+                            <!-- /.table-responsive -->
+                        </div>
+
+
+
 							<div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
 								<ul class="pagination">
 								<c:if test="${pageObj.prev}">
@@ -158,7 +176,21 @@ $(document).ready(function(){
 	});
 	$('.pagination li[data-page='+pageNum+']').addClass("active");
 	
+	$("#searchBtn").on("click",function(e){
+		e.preventDefault();
+		typeValue = $("#search").val();
+		console.log(typeValue);
+		keyWord = $("#keyword").val();
+		console.log(keyWord);
 
+		
+		actionForm.attr("action","/board/list");
+		actionForm.find("input[name='type']").val(typeValue);
+		actionForm.find("input[name='keyword']").val(keyWord);
+		$(".page").val(1);
+		actionForm.submit();
+		
+	});
 	
 });
 

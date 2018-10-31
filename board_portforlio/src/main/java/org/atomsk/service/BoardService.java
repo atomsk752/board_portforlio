@@ -17,5 +17,5 @@ public interface BoardService {
 	
 	public boolean modify(BoardVO boardVO);
 	
-	public int count();
+	public int getTotal(PageParam pageParam);
 }

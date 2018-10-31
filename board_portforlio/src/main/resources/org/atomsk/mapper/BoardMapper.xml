@@ -8,13 +8,15 @@
 	</insert>
 	
 	<select id="getList" resultType="org.atomsk.domain.BoardVO">
-	<![CDATA[
+
 	select * from tbl_sampleboard
 	where 1=1 
+	<include refid="searchSQL"></include>
+
 	and bno > (select max(bno) - 100000 from tbl_sampleboard) 
 	and del = 0
 	order by bno desc limit #{skip},#{display}
-	]]>
+
 	</select>
 	
 	<select id="read" resultType="org.atomsk.domain.BoardVO">
@@ -40,6 +42,26 @@
 	
 	<select id="count" resultType="int">
   	select count(*) from tbl_sampleboard
+  	where 1=1
+  	<include refid="searchSQL"></include>
+  and bno > (select max(bno) - 100000 from tbl_sampleboard)  
   	</select>
+  	
+  	<sql id="searchSQL">
+  		<if test="types != null">
+  			<foreach item="item" collection="types" open="AND (" close=")" separator="OR">
+  				<if test="item == 't'.toString()">
+  				title like concat('%',#{keyword},'%')
+  				</if>
+  				<if test="item == 'w'.toString()">
+  				writer like concat('%',#{keyword},'%')
+  				</if>
+  				<if test="item == 'c'.toString()">
+  				content like concat('%',#{keyword},'%')
+  				</if>
+  			</foreach>
+  		</if>
+  	
+  	</sql>
 	
 </mapper>
