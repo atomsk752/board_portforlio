@@ -58,17 +58,20 @@ public class BoardController {
 		}
 		rttr.addAttribute("page",pageParam.getPage());
 		rttr.addAttribute("bno",boardVO.getBno());
-
+		rttr.addAttribute("display",pageParam.getDisplay());
 		return "redirect:/board/get";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(BoardVO boardVO, RedirectAttributes rttr) {
+	public String remove(BoardVO boardVO, @ModelAttribute("pageObj") PageParam pageParam, RedirectAttributes rttr) {
 		log.info("remove: "+ boardVO);
 		
 		if (service.remove(boardVO)) {
 			rttr.addFlashAttribute("result", "SUCCESS");
 		}
+		rttr.addAttribute("page",pageParam.getPage());
+		rttr.addAttribute("bno",boardVO.getBno());
+		rttr.addAttribute("display",pageParam.getDisplay());
 		return "redirect:/board/list";
 	}
 	

@@ -14,17 +14,26 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+       	 <script>
+         function change(obj) {
+             //alert("change")
+             var sizeValue = obj.options[obj.selectedIndex].value;
+             console.log(sizeValue);
+             self.location = "list?page=1&display="+sizeValue;
+         }
+   		 </script>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            	게시판
-                        <select id="size">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        <select onchange="change(this)">
+                        <option value="10"${pageObj.display==10?"selected":""}"><c:out value="${pageObj.display}"></c:out></option>          
+                        <option value="10"${pageObj.display==10?"selected":""}">10</option>
+                        <option value="20"${pageObj.display==10?"selected":""}">20</option>
+                        <option value="50"${pageObj.display==10?"selected":""}">50</option>
+                        <option value="100"${pageObj.display==10?"selected":""}">100</option>
                     	</select>
+                    	개 씩 모아보기
                         </div>
                         <!-- /.panel-heading -->
 
@@ -62,6 +71,7 @@
                         </div>
                     <form id="actionForm">
 						<input type='hidden' name='page' id='page' value='${pageObj.page}'>
+						<input type='hidden' name='display' id='display' value='${pageObj.display}'>						
 					</form>
 							<div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
 								<ul class="pagination">
@@ -147,6 +157,8 @@ $(document).ready(function(){
 		actionForm.attr("action", "/board/list").attr("method","get").submit();
 	});
 	$('.pagination li[data-page='+pageNum+']').addClass("active");
+	
+
 	
 });
 
