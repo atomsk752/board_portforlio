@@ -24,12 +24,23 @@
 	</delete>
 	
 	<select id="getListWithPaging" resultType="org.atomsk.domain.ReplyVO">
-		select rno, bno, reply, replyer, replyDate, replyupdatedate
+	select rno, bno, reply, replyer, replyDate, replyupdatedate
+	from tbl_samplereply
+	where 1=1
+	and bno = #{bno}
+	order by rno asc limit #{pageObj.skip},#{pageObj.display}
+	
+<!-- 		select rno, bno, reply, replyer, replyDate, replyupdatedate
 		from tbl_samplereply
 		where bno = #{bno}
-		order by rno asc
+		and rno > 0
+		order by rno asc -->
 		<!-- and replydel = 0 -->
 	
+	</select>
+	
+	<select id="getCountByBno" resultType="int">
+	select count(rno) from tbl_samplereply where bno = #{bno}
 	</select>
 
 </mapper>

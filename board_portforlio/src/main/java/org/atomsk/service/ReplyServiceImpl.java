@@ -3,6 +3,7 @@ package org.atomsk.service;
 import java.util.List;
 
 import org.atomsk.domain.PageParam;
+import org.atomsk.domain.ReplyPageDTO;
 import org.atomsk.domain.ReplyVO;
 import org.atomsk.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,12 @@ public class ReplyServiceImpl implements ReplyService {
 		log.info("get Reply List of a Board"+bno);
 		
 		return mapper.getListWithPaging(pageParam, bno);
+	}
+
+	@Override
+	public ReplyPageDTO getListPage(PageParam pageParam, Long bno) {
+		
+		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(pageParam, bno));
 	}
 
 }

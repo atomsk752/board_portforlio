@@ -20,6 +20,8 @@ public interface ReplyMapper {
 			@Param("pageObj") PageParam pageParam,
 			@Param("bno") Long bno);
 	
+	public int getCountByBno(Long bno);
+	
 	
 	
 

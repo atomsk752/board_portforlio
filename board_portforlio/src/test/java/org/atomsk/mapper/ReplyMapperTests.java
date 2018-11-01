@@ -24,6 +24,14 @@ public class ReplyMapperTests {
 	@Setter(onMethod_=@Autowired)
 	private ReplyMapper mapper;
 	
+	@Test
+	public void testList2() {
+		PageParam pageParam = new PageParam(2, 10);
+		
+		List<ReplyVO> replies = mapper.getListWithPaging(pageParam, 16622L);
+		
+		replies.forEach(reply -> log.info(reply));
+	}
 
 	@Test
 	public void testList() {

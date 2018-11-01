@@ -3,6 +3,7 @@ package org.atomsk.controller;
 import java.util.List;
 
 import org.atomsk.domain.PageParam;
+import org.atomsk.domain.ReplyPageDTO;
 import org.atomsk.domain.ReplyVO;
 import org.atomsk.service.ReplyService;
 import org.springframework.http.HttpStatus;
@@ -87,13 +88,13 @@ public class ReplyController {
 			produces = {
 					MediaType.APPLICATION_XML_VALUE,
 					MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(
+	public ResponseEntity<ReplyPageDTO> getList(
 			@PathVariable("page") int page,
 			@PathVariable("bno") Long bno) {
 		log.info("getList...........");
 		PageParam pageParam = new PageParam(page, 10);
 		log.info(pageParam);
-		return new ResponseEntity<>(service.getList(pageParam, bno), HttpStatus.OK);	
+		return new ResponseEntity<>(service.getListPage(pageParam, bno), HttpStatus.OK);	
 		};
 	
 	
