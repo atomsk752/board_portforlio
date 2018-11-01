@@ -54,7 +54,7 @@
                                         <tr>
                                             <td><c:out value="${board.bno}"></c:out></td>
                                             <td><a href="${board.bno}" class="board">
-                                            <c:out value="${board.title}"/></a></td>
+                                            <c:out value="${board.title}"/><b> [<c:out value="${board.replyCnt}"/>]</b></a></td>
                                             <td><c:out value="${board.writer}"></c:out></td>
                                             <td><fmt:formatDate value="${board.regdate}"
 											pattern="MM-dd / HH:mm"></fmt:formatDate></td>

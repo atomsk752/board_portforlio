@@ -5,9 +5,11 @@ import java.util.List;
 import org.atomsk.domain.PageParam;
 import org.atomsk.domain.ReplyPageDTO;
 import org.atomsk.domain.ReplyVO;
+import org.atomsk.mapper.BoardMapper;
 import org.atomsk.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -21,7 +23,11 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	@Setter(onMethod_=@Autowired)
 	private ReplyMapper mapper;
+	
+	@Setter(onMethod_=@Autowired)
+	private BoardMapper boardMapper;
 
+	@Transactional
 	@Override
 	public int register(ReplyVO replyVO) {
 
@@ -46,6 +52,7 @@ public class ReplyServiceImpl implements ReplyService {
 		return mapper.update(replyVO);
 	}
 
+	@Transactional
 	@Override
 	public int remove(Long rno) {
 		

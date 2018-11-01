@@ -30,6 +30,10 @@
 	<update id="delete" parameterType="org.atomsk.domain.BoardVO">
 		update tbl_sampleboard set del = 1 where bno= #{bno}
 	</update>
+	
+	<update id="updateReplyCnt">
+		update tbl_sampleboard set replycnt = replycnt + #{amount} where bno = #{bno}
+	</update>
 
 	<update id="update" parameterType="org.atomsk.domain.BoardVO">
 		update tbl_sampleboard set title = #{title},

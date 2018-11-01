@@ -2,6 +2,7 @@
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.atomsk.domain.BoardVO;
 import org.atomsk.domain.PageParam;
 
@@ -18,5 +19,7 @@ public interface BoardMapper {
 	public int update(BoardVO boardVO);
 	
 	public int count(PageParam pageParam);
+	
+	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 
 }
