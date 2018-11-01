@@ -19,11 +19,9 @@
 		where rno = #{rno}
 	</update>
 
-	<update id="delete">
-		update tbl_samplereply set replydel = 1,
-		replyupdatedate =now()
-		where rno = #{rno}
-	</update>
+	<delete id="delete">
+		delete from tbl_samplereply where rno = #{rno}
+	</delete>
 	
 	<select id="getListWithPaging" resultType="org.atomsk.domain.ReplyVO">
 		select rno, bno, reply, replyer, replyDate, replyupdatedate
