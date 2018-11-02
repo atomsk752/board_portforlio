@@ -28,6 +28,7 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/
 		<location>C:\\upload\\temp</location>
 		<max-file-size>20971520</max-file-size> <!-- 20mb 파일최대크기 -->
 		<max-request-size>20971520</max-request-size> <!-- 20mb 총 가용메모리 -->
+		<file-size-threshold>20971520</file-size-threshold>
 		</multipart-config>
 	</servlet>
 		

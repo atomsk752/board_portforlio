@@ -93,6 +93,8 @@ var replyService = (function(){
 		});
 	}
 	
+	
+	
 	function displayTime(timeValue){
 		var today = new Date();
 		var gap = today.getTime() - timeValue;
@@ -109,7 +111,7 @@ var replyService = (function(){
 			
 			
 		}else{
-			var yy = dataObj.getFullyear();
+			var yy = dateObj.getFullYear();
 			var mm = dateObj.getMonth() + 1;
 			var dd = dateObj.getDate();
 			

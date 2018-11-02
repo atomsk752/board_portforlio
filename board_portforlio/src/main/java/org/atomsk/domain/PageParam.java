@@ -41,6 +41,7 @@ public class PageParam {
 		return (this.page-1) * this.display;
 	}//end skip
 	
+
 	
 	public void setType(String type) {
 		this.type = type;

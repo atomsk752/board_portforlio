@@ -193,6 +193,7 @@ $(document).ready(function(){
 	
 	
 	function showList(page){
+		console.log("showlist: " + page);
 		replyService.getList({bno:bnoValue,page: page||1}, function(replyCnt, list){
 			
 			console.log("replyCnt: "+ replyCnt);
@@ -207,7 +208,6 @@ $(document).ready(function(){
 			
 			var str="";
 			if (list == null || list.length==0) {
-				replyUL.html("");
 				return;
 				
 			}

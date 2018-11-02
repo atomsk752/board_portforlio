@@ -33,6 +33,8 @@ public class ReplyServiceImpl implements ReplyService {
 
 		log.info("register..." + replyVO);
 		
+		boardMapper.updateReplyCnt(replyVO.getBno(), 1);
+		
 		return  mapper.insert(replyVO);
 	}
 
@@ -57,6 +59,9 @@ public class ReplyServiceImpl implements ReplyService {
 	public int remove(Long rno) {
 		
 		log.info("remove...." + rno);
+		ReplyVO replyVO = mapper.read(rno);
+		
+		boardMapper.updateReplyCnt(replyVO.getBno(), -1);
 		
 		return mapper.delete(rno);
 	}
