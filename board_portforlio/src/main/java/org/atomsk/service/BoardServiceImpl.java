@@ -2,20 +2,29 @@ package org.atomsk.service;
 
 import java.util.List;
 
+import org.atomsk.domain.BoardAttachVO;
 import org.atomsk.domain.BoardVO;
 import org.atomsk.domain.PageParam;
+import org.atomsk.mapper.BoardAttachMapper;
 import org.atomsk.mapper.BoardMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-@AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
+	
+	@Setter(onMethod_=@Autowired)
 	private BoardMapper mapper;
+	
+	@Setter(onMethod_=@Autowired)
+	private BoardAttachMapper attachMapper;
 	
 	@Override
 	public List<BoardVO> getList(PageParam pageParam) {
@@ -24,10 +33,22 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getList(pageParam);
 	}
 
+	@Transactional
 	@Override
 	public int register(BoardVO boardVO) {
-		// TODO Auto-generated method stub
-		return mapper.register(boardVO);
+		
+		log.info("register..." + boardVO);
+		
+		int result = mapper.insertSelectKey(boardVO);
+		
+		if (boardVO.getAttachList()==null || boardVO.getAttachList().size() <= 0) {
+			return result;
+		}
+		for (BoardAttachVO attach : boardVO.getAttachList()) {
+			attach.setBno(boardVO.getBno());
+			attachMapper.insert(attach);
+		}
+		return result;
 	}
 
 	@Override

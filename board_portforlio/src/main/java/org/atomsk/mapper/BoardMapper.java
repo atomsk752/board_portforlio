@@ -20,6 +20,8 @@ public interface BoardMapper {
 	
 	public int count(PageParam pageParam);
 	
+	public Integer insertSelectKey(BoardVO boardVO);
+	
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 
 }

@@ -42,7 +42,12 @@
 		updatedate = now()
 		where bno = #{bno}
 	</update>
-
+	<insert id="insertSelectKey">
+		insert into
+		tbl_sampleboard(title,content,writer)
+		values(#{title},#{content},#{writer})
+		<selectKey resultType="int" keyProperty="bno" order="AFTER"> select max(bno) from tbl_sampleboard</selectKey>
+	</insert>
 	<select id="count" resultType="int">
 		select count(*) from tbl_sampleboard
 		where 1=1
