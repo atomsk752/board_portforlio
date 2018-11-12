@@ -1,0 +1,13 @@
+diff a/board_portforlio/pom.xml b/board_portforlio/pom.xml	(rejected hunks)
+@@ -191,6 +191,11 @@
+ 			<artifactId>jackson-dataformat-xml</artifactId>
+ 			<version>2.9.6</version>
+ 		</dependency>
++<dependency>
++    <groupId>net.coobird</groupId>
++    <artifactId>thumbnailator</artifactId>
++    <version>0.4.8</version>
++</dependency>
+ 		<!-- Test -->
+ 		<dependency>
+ 			<groupId>junit</groupId>

@@ -106,6 +106,9 @@ $(document).ready(function(){
 				alert(result);
 			}				
 		}); //$.ajax
+		
+
+		
 	});
 	
 	var uploadResult = $(".uploadResult ul");
@@ -135,7 +138,7 @@ $(document).ready(function(){
 				
 				str += "<li><a href=\"javascript:showImage(\'"+originPath+"\')\">"
 					+"<img src='/show?fileName="+fileCallPath+"'></a>"
-					+"<span data-file=\'"+fileCallPath+"\' data-type='image'> x </span></li>";
+					+"<span data-file=\'"+fileCallPath+"\' data-type='image'> x </span>"+"</li>";
 				
 				}
 			});

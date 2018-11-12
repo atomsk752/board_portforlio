@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.atomsk.mapper.ReplyMapper">
+
+	<insert id="insert">
+		insert into tbl_samplereply (bno, reply, replyer)
+		values(#{bno},#{reply},#{replyer})
+	</insert>
+
+	<select id="read" resultType="org.atomsk.domain.ReplyVO">
+		select * from tbl_samplereply where rno = #{rno} <!-- and replydel = 0 -->
+	</select>
+
+	<update id="update">
+		update tbl_samplereply set reply = #{reply},
+		replyupdatedate =now()
+		where rno = #{rno}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_samplereply where rno = #{rno}
+	</delete>
+	
+	<select id="getListWithPaging" resultType="org.atomsk.domain.ReplyVO">
+	select rno, bno, reply, replyer, replyDate, replyupdatedate
+	from tbl_samplereply
+	where 1=1
+	and bno = #{bno}
+	order by rno asc limit #{pageObj.skip},#{pageObj.display}
+	
+<!-- 		select rno, bno, reply, replyer, replyDate, replyupdatedate
+		from tbl_samplereply
+		where bno = #{bno}
+		and rno > 0
+		order by rno asc -->
+		<!-- and replydel = 0 -->
+	
+	</select>
+	
+	<select id="getCountByBno" resultType="int">
+	select count(rno) from tbl_samplereply where bno = #{bno}
+	</select>
+
+</mapper>

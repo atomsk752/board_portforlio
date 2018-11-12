@@ -56,6 +56,8 @@ public class UploadController {
 		try {
 			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
 			
+			file.delete();
+			
 			if (type.equals("image")) {
 				
 				String largeFileName = file.getAbsolutePath().replace("s_","");
