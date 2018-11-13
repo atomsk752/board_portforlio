@@ -83,7 +83,9 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardAttachVO> getAttachList(Long bno) {
 		
-		// TODO Auto-generated method stub
+
+		log.info("get Attach list by bno"+bno);
+		
 		return attachMapper.findByBno(bno);
 	}
 

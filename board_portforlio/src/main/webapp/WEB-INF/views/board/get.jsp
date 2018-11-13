@@ -17,8 +17,6 @@
 			<div class="panel-heading">Board Register</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
-
-
 					<div class="form-group">
 						<label>Title</label> <input class="form-control" name='title' value='<c:out value="${board.title}"/>' readonly="readonly">
 						<p class="help-block"></p>
@@ -47,20 +45,82 @@
 					<input type='hidden' name='type' value='${pageObj.type}'>	
 					<input type='hidden' name='keyword' value='${pageObj.keyword}'>			
 					<button type="submit" class="btn btn-default">목록으로</button>
-					</form>
-				
+					</form>			
 			</div>
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
-	<!-- /.col-lg-6 -->
-
-
-
+	<!-- /.col-lg-12 -->
+</div>
+<div class="bigPictureWrapper">
+	<div class="bigPicture">
+	</div>
+</div>
+<style>
+.uploadResult{
+	width:100%;
+	background-color: gray;
+}
+.uploadResult ul{
+	display:flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+.uploadResult ul li{
+	list-style: none;
+	padding: 10px;
+	align-content: center;
+	text-align: center;
+}
+.uploadResult ul li img{
+	width:100%;
+}
+.uploadResult ul li span{
+	color:white;
+}
+.bigPictureWrapper{
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top:0%;
+	width:100%;
+	height:100%;
+	background-color: gray;
+	z-index: 100;
+	background: rgba(255,255,255,0.5);
+}
+.bigPicture{
+	position: relative;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.bigPicture img{
+	width:600px;
+}
+</style>
+<!-- /.row -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">Files</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				<div class="uploadResult">
+				<ul>
+				</ul>
+				</div>
+			</div>
+			<!-- /.panel-body -->
+		</div>
+		<!-- /.panel -->
+	</div>
+	<!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
@@ -88,7 +148,7 @@
 		</div>
 		<!-- /.panel -->
 	</div>
-	<!-- /.col-lg-6 -->
+	<!-- /.col-lg-12 -->
 </div>
 
                             <!-- Modal -->
@@ -126,6 +186,7 @@
                             </div>
                             <!-- /.modal -->
 <script type="text/javascript" src="/resources/js/reply.js"></script>
+
 
 <script type="text/javascript">
 
@@ -222,7 +283,79 @@ $(document).ready(function(){
 		}); //end function
 	}//end showList
 	
+
+	//get file data
+	$.getJSON("/board/getAttachList",{bno: bnoValue}, function(arr){
+		console.log(arr);
+
+		var str ="";
+		
+		$(arr).each(function(i, attach){
+			
+			//image type
+			if (attach.fileType) {
+				var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName);
+				str += "<li data-path='"+attach.uploadPath+"'";
+				str +=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"'data-type='"+attach.fileType+"'"
+				str += "><div>";
+				str += "<img src='/show?fileName="+fileCallPath+"'>";
+				str += "</div>";
+				str += "</li>";
+			}else{
+				
+				str += "<li "
+				str += "data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"'data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>";
+				str += "<span> "+ attach.fileName +"</span><br/>";
+				str += "<img src='/resources/img/attach.jpg'></a>";
+				str += "</div>";
+				str += "</li>";
+				
+			}
+			
+		});
+		
+		$(".uploadResult ul").html(str);
+
+	});//end get json
 	
+	//file click event
+	$(".uploadResult").on("click","li",function(e){
+		console.log("view image");
+		var liObj = $(this);
+		
+		var path = encodeURIComponent(liObj.data("path")+"/"+liObj.data("uuid")+"_"+liObj.data("filename"));
+		
+		if (liObj.data("type")) {
+			showImage(path.replace(new RegExp(/\\/g),"/"));
+		}else{
+			//download
+			self.location = "/download?fileName="+path
+		}
+		
+	});
+	
+	//open image
+	function showImage(fileCallPath){
+		
+		
+		
+		$(".bigPictureWrapper").css("display", "flex").show();
+		
+		$(".bigPicture")
+		.html("<img src='/show?fileName="+fileCallPath+"'>")
+		.animate({width:'100%', height: '100%'}, 1000);
+		
+	}
+	
+	//close image
+	$(".bigPictureWrapper").on("click", function(e){
+		$(".bigPicture").animate({width:'0%',height: '0%'}, 1000);
+		setTimeout(() => {
+			$(this).hide();
+		}, 1000);
+	});
+	
+	//modal
 	
 	var modal = $(".modal");
 	var modalInputReply = modal.find("input[name='reply']");
