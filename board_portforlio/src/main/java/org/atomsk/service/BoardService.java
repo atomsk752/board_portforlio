@@ -2,6 +2,7 @@ package org.atomsk.service;
 
 import java.util.List;
 
+import org.atomsk.domain.BoardAttachVO;
 import org.atomsk.domain.BoardVO;
 import org.atomsk.domain.PageParam;
 
@@ -18,4 +19,6 @@ public interface BoardService {
 	public boolean modify(BoardVO boardVO);
 	
 	public int getTotal(PageParam pageParam);
+	
+	public List<BoardAttachVO> getAttachList(Long bno);
 }

@@ -38,16 +38,19 @@ public class BoardServiceImpl implements BoardService {
 	public int register(BoardVO boardVO) {
 		
 		log.info("register..." + boardVO);
-		
-		int result = mapper.insertSelectKey(boardVO);
+		log.info(boardVO.getBno());
 		
 		if (boardVO.getAttachList()==null || boardVO.getAttachList().size() <= 0) {
-			return result;
+			return mapper.register(boardVO);
 		}
-		for (BoardAttachVO attach : boardVO.getAttachList()) {
+		
+		int result = mapper.register(boardVO);
+		
+		boardVO.getAttachList().forEach(attach -> {
 			attach.setBno(boardVO.getBno());
 			attachMapper.insert(attach);
-		}
+		});
+		
 		return result;
 	}
 
@@ -75,6 +78,13 @@ public class BoardServiceImpl implements BoardService {
 	public int getTotal(PageParam pageParam) {
 		// TODO Auto-generated method stub
 		return mapper.count(pageParam);
+	}
+
+	@Override
+	public List<BoardAttachVO> getAttachList(Long bno) {
+		
+		// TODO Auto-generated method stub
+		return attachMapper.findByBno(bno);
 	}
 
 
