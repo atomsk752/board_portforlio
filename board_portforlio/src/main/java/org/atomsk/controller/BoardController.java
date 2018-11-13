@@ -1,5 +1,8 @@
 package org.atomsk.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.atomsk.domain.BoardAttachVO;
@@ -29,6 +32,37 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 
 	private BoardService service;
+	
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		
+		if (attachList== null || attachList.size()==0) {
+			return;
+		}
+		log.info("delete attach files....");
+		log.info(attachList);
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("C:\\upload\\"+attach.
+						getUploadPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
+				
+				Files.deleteIfExists(file);
+				
+				if (Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("C:\\upload\\"+attach.
+							getUploadPath()+"\\s_"+ attach.getUuid()+"_"+ attach.getFileName());
+					
+					Files.delete(thumbNail);
+				}
+				
+			}catch(Exception e) {
+				log.error("delete file error" + e.getMessage());
+			}//end catch
+		});//end foreach
+		
+	}
+	
+
 	
 	@GetMapping(value="/getAttachList",
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -92,7 +126,12 @@ public class BoardController {
 	public String remove(BoardVO boardVO, @ModelAttribute("pageObj") PageParam pageParam, RedirectAttributes rttr) {
 		log.info("remove: "+ boardVO);
 		
+		//attached files
+		List<BoardAttachVO> attachList = service.getAttachList(boardVO.getBno());
+		
 		if (service.remove(boardVO)) {
+			deleteFiles(attachList);
+			
 			rttr.addFlashAttribute("result", "SUCCESS");
 		}
 		rttr.addAttribute("page",pageParam.getPage());

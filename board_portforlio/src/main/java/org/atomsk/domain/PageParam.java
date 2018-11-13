@@ -54,16 +54,15 @@ public class PageParam {
 	}//end type
 	
 	
-	public String getLink(String path) {
+	public String getListLink() {
 		
-		return UriComponentsBuilder.fromPath(path)
-		.queryParam("bno", this.bno)
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+		//.queryParam("bno", this.bno)
 		.queryParam("page", this.page)
-		.queryParam("display", this.display)
-		.queryParam("type", this.type)
-		.queryParam("keyword", this.keyword)
-		.toUriString();
-		
+		.queryParam("display", this.getDisplay())
+		.queryParam("type", this.getType())
+		.queryParam("keyword", this.getKeyword());
+		return builder.toUriString();
 	}//end link (unused)
 	
 }

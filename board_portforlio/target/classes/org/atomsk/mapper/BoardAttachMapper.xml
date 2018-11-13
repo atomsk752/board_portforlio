@@ -22,6 +22,12 @@ select * from tbl_sampleattach where bno = #{bno}
 
 </select>
 
+<delete id="deleteAll">
+
+delete from tbl_sampleattach where bno = #{bno}
+
+</delete>
+
 
 
 </mapper>

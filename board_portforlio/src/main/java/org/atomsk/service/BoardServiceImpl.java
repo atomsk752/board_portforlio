@@ -60,18 +60,35 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.read(bno);
 	}
 
+	@Transactional
 	@Override
 	public boolean remove(BoardVO boardVO) {
 		// TODO Auto-generated method stub
+		
+		attachMapper.deleteAll(boardVO.getBno());
+		
 		return mapper.delete(boardVO)==1;
 	}
 
+	@Transactional
 	@Override
 	public boolean modify(BoardVO boardVO) {
 		
+		attachMapper.deleteAll(boardVO.getBno());
+		
+		boolean modifyResult = mapper.update(boardVO) == 1;
+		
+		if (modifyResult && boardVO.getAttachList().size()>0) {
+			boardVO.getAttachList().forEach(attach ->{
+				attach.setBno(boardVO.getBno());
+				attachMapper.insert(attach);
+			});
+			
+		}
+		
 		log.info("modify......." + boardVO);
 		
-		return mapper.update(boardVO) == 1;
+		return modifyResult;
 	}
 
 	@Override
