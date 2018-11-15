@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 <bean id="customAccessDenied" class="org.atomsk.security.CustomAccessDeniedHandler"></bean>
-<!-- <bean id="customLoginSuccess" class="org.atomsk.security.CustomLoginSuccessHandler"></bean> -->
+<bean id="customLoginSuccess" class="org.atomsk.security.CustomLoginSuccessHandler"></bean>
 <!-- <bean id="customPasswordEncoder" class="org.atomsk.security.CustomNoOpPasswordEncoder"></bean> -->
 <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 <bean id="customUserDetailsService" class="org.atomsk.security.CustomUserDetailsService"></bean>
@@ -17,7 +17,7 @@
 	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 	
 	<!-- 로그인 URL, 설정 -->
-	<security:form-login login-page="/customLogin"/> 
+	<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> 
 	<!-- 로그아웃 URL, 설정 -->
 	<security:logout logout-url="/customLogout" invalidate-session="true"
 	delete-cookies="remember-me,JSESSION_ID"/>

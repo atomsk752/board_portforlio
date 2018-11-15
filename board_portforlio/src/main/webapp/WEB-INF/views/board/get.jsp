@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <%@include file="../includes/header.jsp"%>
 
 <div class="row">
@@ -37,14 +36,8 @@
 						<input type='hidden' name='bno' value="${board.bno}">
 						<input type="hidden" name="display" value="${pageObj.display}">
 						<input type='hidden' name='type' value='${pageObj.type}'>	
-						<input type='hidden' name='keyword' value='${pageObj.keyword}'>		
-						
-					<sec:authentication property="principal" var="pinfo"/>
-						<sec:authorize access="isAuthenticated()">	
-						<c:if test="${pinfo.username eq board.writer}">
+						<input type='hidden' name='keyword' value='${pageObj.keyword}'>			
 						<button type="submit" class="btn btn-default">수정</button>
-						</c:if>
-						</sec:authorize>
 					</form>
 					<form role="form" action="list" method="get">
 					<input type="hidden" name="page" value="${pageObj.page}">
@@ -133,9 +126,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 			<i class="fa fa-comments fa-fw"></i> Reply
-			<sec:authorize access="isAuthenticated()">
 			<button id="addReplyBtn" class="btn btn-primary btn-xs pull-right">New Reply</button>
-			</sec:authorize>
 			</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
@@ -143,10 +134,10 @@
 			<li class="left clearfix" data-rno='12'>
 			<div>
 			<div class="header">
-			<strong class="primary-font"></strong>
-			<small class="pull-right text-muted"></small>			
+			<strong class="primary-font">user</strong>
+			<small class="pull-right text-muted">2018-01-01 13:13</small>			
 			</div>
-			<p></p>
+			<p>comment</p>
 			</div>			
 			</ul>			
 			</div>
@@ -375,30 +366,12 @@ $(document).ready(function(){
 	var modalRemoveBtn = $("#modalRemoveBtn");
 	var modalRegisterBtn = $("#modalRegisterBtn");
 	
-	var replyer = null;
-	
-	<sec:authorize access="isAuthenticated()">
-	
-	replyer ='<sec:authentication property="principal.username"/>';
-	
-	</sec:authorize>
-	
-	var csrfHeaderName ="${_csrf.headerName}";
-	var csrfTokenValue ="${_csrf.token}";
-	
 	$("#addReplyBtn").on("click", function(e){
 		modal.find("input").val("");
-		modal.find("input[name='replyer']").val(replyer);
 		modalInputReplyDate.closest("div").hide();
 		modal.find("button[id !='modalCloseBtn']").hide();
 		modalRegisterBtn.show();
 		$(".modal").modal("show");
-	});
-	
-	//Ajax spring security header
-	
-	$(document).ajaxSend(function(e, xhr, options){
-		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	});
 	
 	modalRegisterBtn.on("click", function(e){
@@ -423,7 +396,7 @@ $(document).ready(function(){
 		
 		replyService.get(rno, function(reply){
 			modalInputReply.val(reply.reply);
-			modalInputReplyer.val(reply.replyer).attr("readonly", "readonly");
+			modalInputReplyer.val(reply.replyer);
 			modalInputReplyDate.val(replyService.displayTime(reply.replyDate))
 			.attr("readonly", "readonly");
 			modal.data("rno", reply.rno);
@@ -453,26 +426,7 @@ $(document).ready(function(){
 	modalRemoveBtn.on("click", function(e){
 		var rno = modal.data("rno");
 		
-		console.log("RNO: "+ rno);
-		console.log("REPLYER: "+replyer);
-		
-		if (!replyer) {
-			alert("로그인이 필요한 기능입니다.");
-			modal.modal("hide");
-			return;
-		}
-		
-		var originalReplyer = modalInputReplyer.val();
-		
-		console.log("Original Replyer: "+ originalReplyer); //댓글의 원래 작성자
-		
-		if (replyer != originalReplyer) {
-			alert("자신의 댓글만 삭제가 가능합니다.");
-			modal.modal("hide");
-			return;
-		}
-		
-		replyService.remove(rno, originalReplyer, function(result){
+		replyService.remove(rno, function(result){
 			
 			alert(result);
 			modal.modal("hide");

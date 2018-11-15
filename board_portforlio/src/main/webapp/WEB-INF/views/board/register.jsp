@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <%@include file="../includes/header.jsp"%>
 
 
@@ -65,13 +64,13 @@ width:600px;
 			<div class="panel-body">
 
 				<form role="form" action="/board/register" method="post">
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					<div class="form-group">
 						<label>Title</label> <input class="form-control" name='title' value='Sample Title'>
+						<p class="help-block">Example block-level help text here.</p>
 					</div>
 					<div class="form-group">
-						<label>Writer</label> <input class="form-control" name='writer' 
-						value='<sec:authentication property="principal.username"/>' readonly="readonly">
+						<label>Writer</label> <input class="form-control" name='writer' value='sampleUser'>
+						<p class="help-block">Example block-level help text here.</p>
 					</div>
 
 					<div class="form-group">
@@ -79,7 +78,7 @@ width:600px;
 						<textarea class="form-control" name='content' rows="3">Sample Text</textarea>
 					</div>
 
-					<button id='registerBtn' class="btn btn-default">등록</button>
+					<button type="submit" class="btn btn-default">등록</button>
 					</form>
 					<form action="/board/list" method="get">
 					<button type="submit" class="btn btn-default">취소</button>
@@ -147,9 +146,6 @@ $(document).ready(function(e){
 		return true;
 	}
 	
-	var csrfHeaderName ="${_csrf.headerName}";
-	var csrfTokenValue ="${_csrf.token}";
-	
 	$("input[type='file']").change(function(e){
 		
 		var formData = new FormData();
@@ -169,12 +165,8 @@ $(document).ready(function(e){
 		$.ajax({
 			url: '/uploadAjaxAction',
 			processData: false,
-			contentType: false,
-			beforeSend: function(xhr){
-				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-			},
-			data:formData, 
-			type: 'POST',
+			contentType: false,data:
+			formData, type: 'POST',
 			dataType: 'json',
 			success: function(result){
 				console.log(result);
@@ -242,9 +234,6 @@ $(".uploadResult").on("click", "button", function(e){
 	$.ajax({
 		url: '/deleteFile',
 		data: {fileName: targetFile, type:type},
-		beforeSend: function(xhr){
-			xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-		},
 		dataType: 'text',
 		type: 'POST',
 		success: function(result){
@@ -256,7 +245,7 @@ $(".uploadResult").on("click", "button", function(e){
 });
 
 var formObj = $("form[role='form']");
-$("#registerBtn").on("click", function(e){
+$("button[type='submit']").on("click", function(e){
 	
 	e.preventDefault();
 	
