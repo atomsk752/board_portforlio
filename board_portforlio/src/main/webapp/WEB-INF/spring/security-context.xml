@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 <bean id="customAccessDenied" class="org.atomsk.security.CustomAccessDeniedHandler"></bean>
 <bean id="customLoginSuccess" class="org.atomsk.security.CustomLoginSuccessHandler"></bean>
@@ -16,12 +16,15 @@
 	<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>
 	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
 	
-	<!-- 로그인 URL -->
+	<!-- 로그인 URL, 설정 -->
 	<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/> 
-	<security:logout logout-url="/customLogout" invalidate-session="true"/>
+	<!-- 로그아웃 URL, 설정 -->
+	<security:logout logout-url="/customLogout" invalidate-session="true"
+	delete-cookies="remember-me,JSESSION_ID"/>
 	<!-- <security:access-denied-handler error-page="/accessError"/> -->
 	<security:access-denied-handler ref="customAccessDenied"/>
-	
+	<!-- 자동로그인 설정 -->
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
 </security:http>
 
 <security:authentication-manager>
