@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@include file="../includes/header.jsp"%>
 
 <div class="row">
@@ -18,6 +19,9 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 
+			<sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="isAuthenticated()">	
+				<c:if test="${pinfo.username eq board.writer}">
 				<form id='modifyForm' role="form" action="/board/modify" method="post">
 				<input type='hidden' name='page' value="${pageObj.page}">
 				<input type='hidden' name='bno' value="${board.bno}">
@@ -49,7 +53,9 @@
 						 value='<c:out value="${board.updatedate}"/>'>
 						<p class="help-block"></p>
 					</div>					-->
+
 					<button id='modifyBtn' class="btn btn-default">수정</button>
+
 					</form>
 					<form role="form" action="remove" method="post">
 						<input type='hidden' name='page' value="${pageObj.page}">
@@ -59,13 +65,17 @@
 						<input type='hidden' name='keyword' value='${pageObj.keyword}'>	
 						<button id='removeBtn' type="submit" class="btn btn-default">삭제</button>
 					</form>
+
 					<form action="/board/get" method="get">
 						<input type='hidden' name='page' value="${pageObj.page}">
+						<input type='hidden' name='bno' value="${board.bno}">
 						<input type="hidden" name="display" value="${pageObj.display}">
 						<input type='hidden' name='type' value='${pageObj.type}'>	
 						<input type='hidden' name='keyword' value='${pageObj.keyword}'>	
 					<button id='cancleBtn' type="submit" class="btn btn-default">취소</button>
 					</form>
+				</c:if>
+				</sec:authorize>
 			</div>
 			<!-- /.panel-body -->
 		</div>
@@ -252,6 +262,8 @@ $(document).ready(function(){
 		return true;
 	}
 	
+	var csrfHeaderName ="${_csrf.headerName}";
+	var csrfTokenValue ="${_csrf.token}";
 	$("input[type='file']").change(function(e){
 		
 		var formData = new FormData();
@@ -271,8 +283,12 @@ $(document).ready(function(){
 		$.ajax({
 			url: '/uploadAjaxAction',
 			processData: false,
-			contentType: false,data:
-			formData, type: 'POST',
+			contentType: false,
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			data:formData, 
+			type: 'POST',
 			dataType: 'json',
 			success: function(result){
 				console.log(result);
