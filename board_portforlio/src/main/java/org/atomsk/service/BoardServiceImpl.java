@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		boolean modifyResult = mapper.update(boardVO) == 1;
 		
-		if (modifyResult && boardVO.getAttachList().size()>0) {
+		if (modifyResult && (boardVO.getAttachList() != null && boardVO.getAttachList().size()>0)) {
 			boardVO.getAttachList().forEach(attach ->{
 				attach.setBno(boardVO.getBno());
 				attachMapper.insert(attach);

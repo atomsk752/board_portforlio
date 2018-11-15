@@ -24,6 +24,8 @@
 				<input type="hidden" name="display" value="${pageObj.display}">
 				<input type='hidden' name='type' value='${pageObj.type}'>	
 				<input type='hidden' name='keyword' value='${pageObj.keyword}'>	
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+				
 			<div class="form-group">
 						<label>Title</label> <input class="form-control" name='title' value='<c:out value="${board.title}"/>'>
 						<p class="help-block"></p>
